@@ -3,6 +3,8 @@ package cmsLibraryManager.config;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -70,6 +72,18 @@ public enum DriverType implements DriverSetup {
         public WebDriver getWebDriverObject(DesiredCapabilities desiredCapabilities) {
             SafariOptions options = new SafariOptions(desiredCapabilities);
             return new SafariDriver(options);
+        }
+
+    },
+    EDGE {
+            public DesiredCapabilities getDesiredCapabilities() {
+                DesiredCapabilities capabilities = DesiredCapabilities.edge();
+                return capabilities;
+            }
+
+        public WebDriver getWebDriverObject(DesiredCapabilities desiredCapabilities) {
+            EdgeOptions options = new EdgeOptions();
+            return new EdgeDriver(options.merge(desiredCapabilities));
         }
     }
 

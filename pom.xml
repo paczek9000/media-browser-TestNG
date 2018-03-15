@@ -18,7 +18,7 @@
         <!-- Configurable variables -->
         <threads>1</threads>
         <browser>firefox</browser>
-        <overwrite.binaries>false</overwrite.binaries>
+        <overwrite.binaries>true</overwrite.binaries>
     </properties>
 
     <build>
@@ -36,6 +36,7 @@
                         <webdriver.chrome.driver>${webdriver.chrome.driver}</webdriver.chrome.driver>
                         <webdriver.ie.driver>${webdriver.ie.driver}</webdriver.ie.driver>
                         <webdriver.opera.driver>${webdriver.opera.driver}</webdriver.opera.driver>
+                        <webdriver.edge.driver>${webdriver.edge.driver}</webdriver.edge.driver>
                     </systemProperties>
                     <includes>
                         <include>**/*WD.java</include>

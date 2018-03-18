@@ -1,5 +1,6 @@
 package cmsLibraryManager;
 
+import cmsLibraryManager.config.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,7 +16,7 @@ public class BasicTestWD extends DriverFactory {
     private void googleExampleThatSearchesFor(final String searchString) throws Exception {
         WebDriver driver = DriverFactory.getDriver();
         driver.get("https://www.google.com");
-        WebElement searchField = driver.findElement(By.xpath("//*[@name='q']"));
+        WebElement searchField = driver.findElement(By.xpath("//*[@withName='q']"));
         searchField.clear();
         searchField.sendKeys(searchString);
         System.out.println("Page title is: " + driver.getTitle());

@@ -13,7 +13,7 @@ public class WebDriverThread {
     private WebDriver webdriver;
 
 
-    private final String operatingSystem = System.getProperty("os.withName").toUpperCase();
+    private final String operatingSystem = System.getProperty("os.name").toUpperCase();
     private final String systemArchitecture = System.getProperty("os.arch");
     private final String browser = System.getProperty("browser").toUpperCase();
 

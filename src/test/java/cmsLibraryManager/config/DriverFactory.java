@@ -31,9 +31,15 @@ public class DriverFactory {
         };
     }
 
-    public static WebDriver getDriver() throws Exception {
-        return driverThreadThreadLocal.get().getDriver();
+    public static WebDriver getDriver() {
+        try {
+            return driverThreadThreadLocal.get().getDriver();
+        } catch (Exception driverInitException) {
+            System.err.print("Exception while creating a driver instance  " + "\n " + driverInitException.getMessage());
+            return null;
+        }
     }
+
 
     public static String getEnvironmentUrl() {
         baseUrl = WebDriverThread.getEnvironmentUrl();

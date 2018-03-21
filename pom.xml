@@ -19,7 +19,8 @@
         <!-- Configurable variables -->
         <threads>1</threads>
         <browser>firefox</browser>
-        <overwrite.binaries>true</overwrite.binaries>
+        <overwrite.binaries>false</overwrite.binaries>
+        <imageResources>\imageResources</imageResources>
         <env>DEV</env>
     </properties>
 
@@ -33,6 +34,7 @@
                     <parallel>methods</parallel>
                     <threadCount>${threads}</threadCount>
                     <systemProperties>
+                        <imageResources>${imageResources}</imageResources>
                         <browser>${browser}</browser>
                         <webdriver.gecko.driver>${webdriver.gecko.driver}</webdriver.gecko.driver>
                         <webdriver.chrome.driver>${webdriver.chrome.driver}</webdriver.chrome.driver>
@@ -114,7 +116,12 @@
             <version>6.8</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 

@@ -2,24 +2,15 @@ package cmsLibraryManager;
 
 import cmsLibraryManager.config.DriverFactory;
 import cmsLibraryManager.pageObjects.DirectoryPage;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
-import utils.Helper;
-
-import java.util.Hashtable;
 
 public class AssetTaggingTestWD extends DriverFactory {
 
-    WebDriver driver;
-    DirectoryPage homePage;
+    DirectoryPage mediaBrowserHomePage;
 
     public AssetTaggingTestWD() throws Exception {
-        try {
-            driver = getDriver();
-        } catch (Exception e) {
-            System.out.println("Unable to initialize the driver " + e.getMessage());
-        }
-        homePage = new DirectoryPage();
+
+        mediaBrowserHomePage = new DirectoryPage();
     }
 
 
@@ -28,8 +19,9 @@ public class AssetTaggingTestWD extends DriverFactory {
             description = "the user should be able to tag the assets on the UI for uploads" +
                     "with tag's length up to 50 characters")
     public void taggingImageAssetsOnUploadUI() throws Exception {
-
-        homePage.goTo(DriverFactory.getDriver(), DriverFactory.getEnvironmentUrl());
+        mediaBrowserHomePage.goTo(DriverFactory.getDriver(), DriverFactory.getEnvironmentUrl());
+        mediaBrowserHomePage.uploadImage("test1.jpg", "test2.jpeg", "test3.png");
+        mediaBrowserHomePage.assignTagsToAssets("testTag50Characters12345!@#$%^&*()_+:\"?><{}[]~`/''", "test123", "test555", "testxxx");
     }
 
     @Test(groups = "assetTagging",
@@ -39,6 +31,7 @@ public class AssetTaggingTestWD extends DriverFactory {
 
 
     }
+
     @Test(groups = "assetTagging",
             testName = "Adding a 0-character tag on the UI for Uploads",
             description = "the user should not be able to define a tag with 0 characters")
@@ -52,15 +45,16 @@ public class AssetTaggingTestWD extends DriverFactory {
             description = "the user should be able to tag the asset on the UI for uploads, " +
                     "even with ONE character and even if the user is uploading only one asset")
     public void taggingImageAssetWithOneCharacterOnUploadUI() throws Exception {
-        homePage.goTo(DriverFactory.getDriver(), DriverFactory.getEnvironmentUrl());
-        homePage.uploadSingleImage("Test.jpg");
-        homePage.addTagsOnTheUplaodUI(Helper.getRandomTagNameOfLength(1));
-        homePage.clickDoneButton();
-        Hashtable selectedItemDetails = homePage.selectItem("Test.jpg").getItemDetails();
-       /* Assert.assertThat(
+/*        mediaBrowserHomePage.goTo(DriverFactory.getDriver(), DriverFactory.getEnvironmentUrl());
+        mediaBrowserHomePage.uploadImage("Test.jpg");
+        mediaBrowserHomePage.addTagsOnTheUplaodUI(Helper.getRandomTagNameOfLength(1));
+        mediaBrowserHomePage.clickDoneButton();
+        Hashtable selectedItemDetails = mediaBrowserHomePage.selectItem("Test.jpg").getItemDetails();
+        Assert.assertThat(
                 selectedItemDetails.get("creation date"), is(LocalTime.now()));*/
 
     }
+
     @Test(groups = "assetTagging",
             testName = "Tagging and deleting a tag on the UI for Uploads",
             description = "the user should be able to add a tag and delete it on the UI for Uploads" +
@@ -68,6 +62,7 @@ public class AssetTaggingTestWD extends DriverFactory {
     public void taggingAndDeletingATagOnTheUploadUI() throws Exception {
 
     }
+
     //ListView scenarios
     @Test(groups = "assetTagging",
             testName = "Tagging and deleting a tag on the ListView",
@@ -76,6 +71,7 @@ public class AssetTaggingTestWD extends DriverFactory {
     public void taggingAndDeletingATagOnTheListView() throws Exception {
 
     }
+
     @Test(groups = "assetTagging",
             testName = "Tagging multiple image assets on the ListView",
             description = "the user should be able to tag the assets on the ListView")
@@ -89,6 +85,7 @@ public class AssetTaggingTestWD extends DriverFactory {
     public void taggingImageAssetsWith51CharactersOnListView() throws Exception {
 
     }
+
     @Test(groups = "assetTagging",
             testName = "Adding a 0-character tag on the ListView",
             description = "the user should not be able to define a tag with 0 characters")
@@ -102,7 +99,6 @@ public class AssetTaggingTestWD extends DriverFactory {
     public void taggingImageAssetWithOneCharacterOnListView() throws Exception {
 
     }
-
 
 
 }

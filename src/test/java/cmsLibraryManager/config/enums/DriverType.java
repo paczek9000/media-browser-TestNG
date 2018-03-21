@@ -30,7 +30,9 @@ public enum DriverType implements DriverSetup {
 
         public WebDriver getWebDriverObject(DesiredCapabilities desiredCapabilities) {
             FirefoxOptions options = new FirefoxOptions(desiredCapabilities);
-            return new FirefoxDriver(options);
+            WebDriver driver = new FirefoxDriver(options);
+            driver.manage().window().fullscreen();
+            return driver;
         }
     },
     CHROME {
@@ -46,6 +48,7 @@ public enum DriverType implements DriverSetup {
 
         public WebDriver getWebDriverObject(DesiredCapabilities desiredCapabilities) {
             ChromeOptions options = new ChromeOptions();
+            options.addArguments("start-maximized");
             return new ChromeDriver(options.merge(desiredCapabilities));
         }
     },

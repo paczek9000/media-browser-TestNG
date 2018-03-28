@@ -1,0 +1,29 @@
+IF NOT RUNNED FROM MVN COMMAND Please comment above lines and replace them with following
+
+----------------------------------------------
+utils.Helper
+Line : 22
+replace:
+File file = new File(System.getProperty("user.dir") + File.separatorChar + System.getProperty("imageResources") + File.separatorChar + fileName);
+with
+File file = new File(System.getProperty("user.dir") + File.separatorChar + PATH_TO_THE_IMAGE_RESOURCE_DIRECTORU + File.separatorChar + fileName);
+
+----------------------------------------------
+
+
+cmsLibraryManager.config.WebDriverThread
+lINE: 18
+replace:
+private final String browser = System.getProperty("browser").toUpperCase();
+with
+private final String browser = "firefox"
+
+----------------------------------------------
+
+cmsLibraryManager.config.enums.DriverType
+Line 34:
+Set system property driver path
+for Example:
+System.setProperty("webdriver.gecko.driver", "E:\\Projects\\media-browser-TestNG\\src\\test\\resources\\selenium_standalone_binaries\\windows\\marionette\\64bit\\geckodriver.exe");
+
+----------------------------------------------

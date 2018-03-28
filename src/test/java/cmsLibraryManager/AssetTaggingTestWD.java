@@ -2,7 +2,13 @@ package cmsLibraryManager;
 
 import cmsLibraryManager.config.DriverFactory;
 import cmsLibraryManager.pageObjects.DirectoryPage;
+import org.junit.Assert;
 import org.testng.annotations.Test;
+
+import java.util.HashMap;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 
 public class AssetTaggingTestWD extends DriverFactory {
 
@@ -13,21 +19,56 @@ public class AssetTaggingTestWD extends DriverFactory {
         mediaBrowserHomePage = new DirectoryPage();
     }
 
-
     @Test(groups = "assetTagging",
             testName = "Tagging multiple image assets on the UI for Uploads",
             description = "the user should be able to tag the assets on the UI for uploads" +
                     "with tag's length up to 50 characters")
     public void taggingImageAssetsOnUploadUI() throws Exception {
-        mediaBrowserHomePage.goTo(DriverFactory.getDriver(), DriverFactory.getEnvironmentUrl());
-        mediaBrowserHomePage.uploadImage("test1.jpg", "test2.jpeg", "test3.png");
-        mediaBrowserHomePage.assignTagsToAssets("testTag50Characters12345!@#$%^&*()_+:\"?><{}[]~`/''", "test123", "test555", "testxxx");
+
+        String[] testingTags = {
+                "testTag50Characters12345!@#$%^&*()_+:\"?><{}[]~`/''",
+                "test123",
+                "test555",
+                "testxxx"};
+
+        String[] testingFilesToUpload = {
+                "test1.jpg",
+                "test2.jpeg",
+                "test3.png"};
+
+        mediaBrowserHomePage.goTo(DriverFactory.getDriver(), "https://media-browser.dev-allsaints.com");
+        // commented if started from maven
+        // mediaBrowserHomePage.goTo(DriverFactory.getDriver(), DriverFactory.getEnvironmentUrl());
+        mediaBrowserHomePage.changeBetweenViews();
+        mediaBrowserHomePage.uploadImages(testingFilesToUpload);
+        mediaBrowserHomePage.assignTagsToAssets(testingTags);
+        HashMap detailsOfSelectedItem = null;
+
+        for (String fileUploaded : testingFilesToUpload) {
+            detailsOfSelectedItem = mediaBrowserHomePage.selectItem(fileUploaded).getItemDetails();
+            Assert.assertThat("First tag does not match ", detailsOfSelectedItem.get("tagNo1"), is(equalTo(testingTags[0])));
+            Assert.assertThat("Second tag does not match ", detailsOfSelectedItem.get("tagNo2"), is(equalTo(testingTags[1])));
+            Assert.assertThat("Third tag does not match ", detailsOfSelectedItem.get("tagNo3"), is(equalTo(testingTags[2])));
+            Assert.assertThat("Fourth tag does not match ", detailsOfSelectedItem.get("tagNo4"), is(equalTo(testingTags[3])));
+
+        }
     }
 
     @Test(groups = "assetTagging",
             testName = "Adding a 51-characters tag to assets on the UI for Uploads",
             description = "the user should be not able to define a tag with 51 characters")
     public void taggingImageAssetsWith51Characters() throws Exception {
+        String testingTagWithNotAllowedNumberOfCharacters = "testTag50Characters12345!@#$%^&*()_+:\"?><{}[]~`/''1";
+        String testingFilesToUpload = "test1.jpg";
+
+        mediaBrowserHomePage.goTo(DriverFactory.getDriver(), "https://media-browser.dev-allsaints.com");
+        // commented if started from maven
+        // mediaBrowserHomePage.goTo(DriverFactory.getDriver(), DriverFactory.getEnvironmentUrl());
+        mediaBrowserHomePage.changeBetweenViews();
+        mediaBrowserHomePage.uploadImages(testingFilesToUpload);
+        mediaBrowserHomePage.assignTagsToAssets(testingTagWithNotAllowedNumberOfCharacters);
+        HashMap selectedItemDetails = mediaBrowserHomePage.selectItem(testingFilesToUpload).getItemDetails();
+        Assert.assertThat("First tag does not match ", selectedItemDetails.get("tagNo1"), is(equalTo(testingTagWithNotAllowedNumberOfCharacters)));
 
 
     }
@@ -46,7 +87,7 @@ public class AssetTaggingTestWD extends DriverFactory {
                     "even with ONE character and even if the user is uploading only one asset")
     public void taggingImageAssetWithOneCharacterOnUploadUI() throws Exception {
 /*        mediaBrowserHomePage.goTo(DriverFactory.getDriver(), DriverFactory.getEnvironmentUrl());
-        mediaBrowserHomePage.uploadImage("Test.jpg");
+        mediaBrowserHomePage.uploadImages("Test.jpg");
         mediaBrowserHomePage.addTagsOnTheUplaodUI(Helper.getRandomTagNameOfLength(1));
         mediaBrowserHomePage.clickDoneButton();
         Hashtable selectedItemDetails = mediaBrowserHomePage.selectItem("Test.jpg").getItemDetails();

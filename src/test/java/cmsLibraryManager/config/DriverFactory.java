@@ -35,7 +35,7 @@ public class DriverFactory {
         try {
             return driverThreadThreadLocal.get().getDriver();
         } catch (Exception driverInitException) {
-            System.err.print("Exception while creating a driver instance  " + "\n " + driverInitException.getMessage());
+            System.err.print("\nException while creating a driver instance  " + "\n " + driverInitException.getMessage());
             return null;
         }
     }

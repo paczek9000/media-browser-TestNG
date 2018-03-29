@@ -19,6 +19,7 @@ public class Helper {
     }
     public static String getFilePath(String fileName){
         String filePath = "";
+        // Comment one if started from maven / or locally
         //File file = new File(System.getProperty("user.dir") + File.separatorChar + System.getProperty("imageResources") + File.separatorChar + fileName);
         File file = new File(System.getProperty("user.dir") + File.separatorChar + "imageResources" + File.separatorChar + fileName);
 

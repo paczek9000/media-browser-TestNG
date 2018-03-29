@@ -30,8 +30,6 @@ public class DetailsPage extends PageFactory{
     public DetailsPage(){
         PageFactory.initElements(DriverFactory.getDriver(), this);
     }
-    public WebElement getFileName2(){
-        return fileName;
-    }
+
 
 }

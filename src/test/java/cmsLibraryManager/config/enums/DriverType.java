@@ -31,7 +31,7 @@ public enum DriverType implements DriverSetup {
         public WebDriver getWebDriverObject(DesiredCapabilities desiredCapabilities) {
             FirefoxOptions options = new FirefoxOptions(desiredCapabilities);
             // Set property if not started from maven
-            System.setProperty("webdriver.gecko.driver", "E:\\Projects\\media-browser-TestNG\\src\\test\\resources\\selenium_standalone_binaries\\windows\\marionette\\64bit\\geckodriver.exe");
+            System.setProperty("webdriver.gecko.driver", "C:\\Users\\lpaczek\\Documents\\Projects\\media-browser-TestNG\\src\\test\\resources\\selenium_standalone_binaries\\windows\\marionette\\64bit\\geckodriver.exe");
             WebDriver driver = new FirefoxDriver(options);
             driver.manage().window().fullscreen();
             return driver;

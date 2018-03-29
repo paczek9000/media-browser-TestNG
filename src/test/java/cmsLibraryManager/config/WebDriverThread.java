@@ -16,7 +16,7 @@ public class WebDriverThread {
     private final String operatingSystem = System.getProperty("os.name").toUpperCase();
     private final String systemArchitecture = System.getProperty("os.arch");
     //commented if not runned from maven
-    // private final String browser = System.getProperty("browser").toUpperCase();
+     //private final String browser = System.getProperty("browser").toUpperCase();
     private final String browser = "firefox";
 
     private static Environment determineEnvironment() {

@@ -2,10 +2,15 @@ package cmsLibraryManager;
 
 import cmsLibraryManager.config.DriverFactory;
 import cmsLibraryManager.pageObjects.DirectoryPage;
+import lombok.Synchronized;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -13,10 +18,11 @@ import static org.hamcrest.CoreMatchers.is;
 public class AssetTaggingTestWD extends DriverFactory {
 
     DirectoryPage mediaBrowserHomePage;
+    public static Set<String> testingDataToBeCleaned;
 
     public AssetTaggingTestWD() throws Exception {
-
         mediaBrowserHomePage = new DirectoryPage();
+        testingDataToBeCleaned = new ConcurrentSkipListSet<>();
     }
 
     @Test(groups = "assetTagging",
@@ -35,6 +41,8 @@ public class AssetTaggingTestWD extends DriverFactory {
                 "test1.jpg",
                 "test2.jpeg",
                 "test3.png"};
+        testingDataToBeCleaned.addAll(Arrays.asList(testingTags));
+        testingDataToBeCleaned.addAll(Arrays.asList(testingFilesToUpload));
 
         mediaBrowserHomePage.goTo(DriverFactory.getDriver(), "https://media-browser.dev-allsaints.com");
         // commented if started from maven
@@ -61,6 +69,8 @@ public class AssetTaggingTestWD extends DriverFactory {
         String testingTagWithNotAllowedNumberOfCharacters = "testTag50Characters12345!@#$%^&*()_+:\"?><{}[]~`/''1";
         String testingFilesToUpload = "test1.jpg";
 
+        testingDataToBeCleaned.add(testingTagWithNotAllowedNumberOfCharacters);
+        testingDataToBeCleaned.add(testingFilesToUpload);
         mediaBrowserHomePage.goTo(DriverFactory.getDriver(), "https://media-browser.dev-allsaints.com");
         // commented if started from maven
         // mediaBrowserHomePage.goTo(DriverFactory.getDriver(), DriverFactory.getEnvironmentUrl());

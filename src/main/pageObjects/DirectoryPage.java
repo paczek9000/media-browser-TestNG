@@ -1,7 +1,9 @@
-package cmsLibraryManager.pageObjects;
+package main.pageObjects;
 
-import cmsLibraryManager.config.DriverFactory;
+
 import lombok.Data;
+import main.config.DriverFactory;
+import main.utils.Helper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,11 +11,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import utils.Helper;
 
-import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.AWTException;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -167,7 +168,7 @@ public class DirectoryPage {
      * @throws Exception
      */
     public void assignTagsToAssets(String... tags) throws Exception {
-        Helper.waitUntilElementIsDisplayed(DriverFactory.getDriver(), noTagsAssignedLabel);
+        Helper.waitFor(DriverFactory.getDriver(), noTagsAssignedLabel,15);
         Actions actions = new Actions(DriverFactory.getDriver());
         for (String aNewTag : tags) {
             clickAddTagButton();
@@ -188,7 +189,7 @@ public class DirectoryPage {
      * The methods waits until Done button is displayed and then clicks on it
      */
     public void clickDoneButton() {
-        Helper.waitUntilElementIsDisplayed(DriverFactory.getDriver(), doneButton);
+        Helper.waitFor(DriverFactory.getDriver(), doneButton, 15);
         doneButton.click();
     }
 
@@ -202,10 +203,10 @@ public class DirectoryPage {
      */
     public void uploadImages(String... fileName) throws Exception {
         clickOnUploadIcon();
-        Helper.waitUntilElementIsDisplayed(DriverFactory.getDriver(), uploadLightBox);
+        Helper.waitFor(DriverFactory.getDriver(), uploadLightBox, 15);
         directlyUploadImageFilesToCurrentLocation();
         chooseFileToUpload(fileName);
-        Helper.waitUntilElementIsDisplayed(DriverFactory.getDriver(), uploadLightBox);
+        Helper.waitFor(DriverFactory.getDriver(), uploadLightBox, 15);
 
     }
 

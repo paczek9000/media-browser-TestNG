@@ -1,7 +1,7 @@
-package cmsLibraryManager.config;
+package main.config;
 
-import cmsLibraryManager.config.enums.DriverType;
-import cmsLibraryManager.config.enums.Environment;
+import main.config.enums.DriverType;
+import main.config.enums.Environment;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 

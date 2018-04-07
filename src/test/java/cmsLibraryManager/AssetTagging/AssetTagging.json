@@ -1,0 +1,18 @@
+{
+  "tc001_taggingAssetsOnUploadUI": [
+    {
+      "rowID": "tc001_taggingAssetsOnUploadUI.01",
+      "description": "JPG asset - allowed",
+      "type": "image",
+      "name": "Test.jpg",
+      "path": "test\\Test.jpg"
+    },
+    {
+      "rowID": "tc001_taggingAssetsOnUploadUI.02",
+      "description": "JPEG asset - allowed",
+      "type": "image",
+      "name": "Test22.jpeg",
+      "path": "test\\Test22.jpg"
+    }
+  ]
+}

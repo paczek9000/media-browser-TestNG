@@ -1,35 +1,49 @@
-package cmsLibraryManager;
+package cmsLibraryManager.AssetTagging;
 
-import cmsLibraryManager.config.DriverFactory;
-import cmsLibraryManager.pageObjects.DirectoryPage;
-import lombok.Synchronized;
+import main.config.DriverFactory;
+import main.pageObjects.DirectoryPage;
+import main.utils.AssetPOI;
+import main.utils.JSONDataProvider;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.junit.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.io.FileReader;
+import java.lang.reflect.Method;
+import java.util.*;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
 public class AssetTaggingTestWD extends DriverFactory {
-
+    public static String dataFile = "";
+    public static String testCaseName = "AssetTagging.json";
     DirectoryPage mediaBrowserHomePage;
     public static Set<String> testingDataToBeCleaned;
+    private final String DATA_FILE = "AssetTagging.json";
 
     public AssetTaggingTestWD() throws Exception {
         mediaBrowserHomePage = new DirectoryPage();
         testingDataToBeCleaned = new ConcurrentSkipListSet<>();
+        JSONDataProvider.dataFile = DATA_FILE;
     }
 
-    @Test(groups = "assetTagging",
-            testName = "Tagging multiple image assets on the UI for Uploads",
-            description = "the user should be able to tag the assets on the UI for uploads" +
-                    "with tag's length up to 50 characters")
-    public void taggingImageAssetsOnUploadUI() throws Exception {
+    @Test(dataProvider="test1", description = "test", testName = "sdsd")
+    public void tc001_taggingAssetsOnUploadUI( String rowID, String description, JSONObject object ) throws Exception {
+
+        AssetPOI assetPOI = new AssetPOI(object);
+
+        System.out.println(
+                "Name of the asset : " + assetPOI.getName() +
+                        "\nType of the  asset : " + assetPOI.getType() +
+                        "\nPath of the asset : " + assetPOI.getPath() +"\n\n\n\n"
+                        + rowID + "\n " +description
+        );
+
 
         String[] testingTags = {
                 "testTag50Characters12345!@#$%^&*()_+:\"?><{}[]~`/''",
@@ -152,4 +166,80 @@ public class AssetTaggingTestWD extends DriverFactory {
     }
 
 
+    @DataProvider(name = "test1")
+    public static Object[][] fetchData(Method method) throws Exception {
+        Object rowID, description;
+        Object[][] result;
+        testCaseName = method.getName();
+        List<JSONObject> testDataList = new ArrayList<JSONObject>();
+        JSONArray testData = (JSONArray) extractData_JSON("C:\\Users\\lpaczek\\Documents\\Projects\\media-browser-TestNG\\src\\test\\java\\cmsLibraryManager\\AssetTagging\\AssetTagging.json").get(method.getName());
+
+        for ( int i = 0; i < testData.size(); i++ ) {
+            testDataList.add((JSONObject) testData.get(i));
+        }
+/*
+        // include Filter
+        if ( System.getProperty("includePattern") != null ) {
+            String include = System.getProperty("includePattern");
+            List<JSONObject> newList = new ArrayList<JSONObject>();
+            List<String> tests = Arrays.asList(include.split(",", -1));
+
+            for ( String getTest : tests ) {
+                for ( int i = 0; i < testDataList.size(); i++ ) {
+                    if ( testDataList.get(i).toString().contains(getTest) ) {
+                        newList.add(testDataList.get(i));
+                    }
+                }
+            }
+
+            // reassign testRows after filtering tests
+            testDataList = newList;
+        }*/
+
+/*        // exclude Filter
+        if ( System.getProperty("excludePattern") != null ) {
+            String exclude =System.getProperty("excludePattern");
+            List<String> tests = Arrays.asList(exclude.split(",", -1));
+
+            for ( String getTest : tests ) {
+                // start at end of list and work backwards so index stays in sync
+                for ( int i = testDataList.size() - 1 ; i >= 0; i-- ) {
+                    if ( testDataList.get(i).toString().contains(getTest) ) {
+                        testDataList.remove(testDataList.get(i));
+                    }
+                }
+            }
+        }*/
+
+        // create object for dataprovider to return
+        try {
+            result = new Object[testDataList.size()][testDataList.get(0).size()];
+
+            for ( int i = 0; i < testDataList.size(); i++ ) {
+                rowID = testDataList.get(i).get("rowID");
+                description = testDataList.get(i).get("description");
+                result[i] = new Object[] {  rowID, description, testDataList.get(i) };
+            }
+        }
+
+        catch(IndexOutOfBoundsException ie) {
+            result = new Object[0][0];
+        }
+
+        return result;
+    }
+
+    /**
+     * extractData_JSON method to get JSON data from file
+     *
+     * @param file
+     * @return JSONObject
+     * @throws Exception
+     */
+    public static JSONObject extractData_JSON(String file) throws Exception {
+        FileReader reader = new FileReader(file);
+        JSONParser jsonParser = new JSONParser();
+
+        return (JSONObject) jsonParser.parse(reader);
+    }
 }

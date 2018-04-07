@@ -1,4 +1,4 @@
-package cmsLibraryManager.config.enums;
+package main.config.enums;
 
 import cmsLibraryManager.config.interfaces.DriverSetup;
 import org.openqa.selenium.WebDriver;

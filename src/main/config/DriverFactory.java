@@ -1,4 +1,4 @@
-package cmsLibraryManager.config;
+package main.config;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
@@ -38,6 +38,7 @@ public class DriverFactory {
             System.err.print("\nException while creating a driver instance  " + "\n " + driverInitException.getMessage());
             return null;
         }
+
     }
 
 

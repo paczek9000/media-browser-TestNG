@@ -1,21 +1,22 @@
-package utils;
+package main.utils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 
 public class Helper {
-    public static void waitUntilElementIsDisplayed(WebDriver driver, WebElement element) {
-        (new WebDriverWait(driver, 16)).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver input) {
-                return element.isDisplayed();
-            }
-        });
+    public static void waitFor(WebDriver driver, WebElement element, int seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, seconds);
+        wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(element)));
+        }
+    public static void waitFor(WebDriver driver, By by, int seconds){
+        WebDriverWait wait = new WebDriverWait(driver, seconds);
+        wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfAllElementsLocatedBy(by)));
     }
     public static String getFilePath(String fileName){
         String filePath = "";

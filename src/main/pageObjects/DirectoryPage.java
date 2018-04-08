@@ -2,7 +2,7 @@ package main.pageObjects;
 
 
 import lombok.Data;
-import main.config.DriverFactory;
+import main.config.driver.DriverFactory;
 import main.utils.Helper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -128,11 +128,11 @@ public class DirectoryPage {
         long stopTime = System.nanoTime();
         List<WebElement> searchingElement = null;
 
-        Actions actions = new Actions(DriverFactory.getDriver());
+        Actions actions = new Actions(DriverFactory.getInstance().getDriver());
         for (WebElement element : filesListInDirectory) {
             searchingElement = element.findElements(By.xpath(".//div/div/div/p[text()='" + itemNameToSelect + "']"));
             if (!searchingElement.isEmpty()) {
-                Helper.scrollToElement(DriverFactory.getDriver(), searchingElement.get(0));
+                Helper.scrollToElement(DriverFactory.getInstance().getDriver(), searchingElement.get(0));
                 actions.moveToElement(searchingElement.get(0)).moveByOffset(200, 0).click().build().perform();
             }
         }
@@ -168,8 +168,8 @@ public class DirectoryPage {
      * @throws Exception
      */
     public void assignTagsToAssets(String... tags) throws Exception {
-        Helper.waitFor(DriverFactory.getDriver(), noTagsAssignedLabel,15);
-        Actions actions = new Actions(DriverFactory.getDriver());
+        Helper.waitFor(DriverFactory.getInstance().getDriver(), noTagsAssignedLabel,15);
+        Actions actions = new Actions(DriverFactory.getInstance().getDriver());
         for (String aNewTag : tags) {
             clickAddTagButton();
             actions.moveToElement(newTagInputField).sendKeys(aNewTag).moveToElement(uploadedFilesList).click().build().perform();
@@ -189,7 +189,7 @@ public class DirectoryPage {
      * The methods waits until Done button is displayed and then clicks on it
      */
     public void clickDoneButton() {
-        Helper.waitFor(DriverFactory.getDriver(), doneButton, 15);
+        Helper.waitFor(DriverFactory.getInstance().getDriver(), doneButton, 15);
         doneButton.click();
     }
 
@@ -203,10 +203,10 @@ public class DirectoryPage {
      */
     public void uploadImages(String... fileName) throws Exception {
         clickOnUploadIcon();
-        Helper.waitFor(DriverFactory.getDriver(), uploadLightBox, 15);
+        Helper.waitFor(DriverFactory.getInstance().getDriver(), uploadLightBox, 15);
         directlyUploadImageFilesToCurrentLocation();
         chooseFileToUpload(fileName);
-        Helper.waitFor(DriverFactory.getDriver(), uploadLightBox, 15);
+        Helper.waitFor(DriverFactory.getInstance().getDriver(), uploadLightBox, 15);
 
     }
 

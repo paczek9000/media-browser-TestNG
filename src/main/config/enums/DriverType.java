@@ -8,6 +8,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.CapabilityType;
@@ -17,13 +18,14 @@ import org.openqa.selenium.safari.SafariOptions;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lpaczek on 14.03.2018.
  */
 public enum DriverType implements DriverSetup {
     FIREFOX {
-        public DesiredCapabilities getDesiredCapabilities() {
+        public DesiredCapabilities getDefaultCapabilities() {
             DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
             return desiredCapabilities;
         }
@@ -36,9 +38,12 @@ public enum DriverType implements DriverSetup {
             driver.manage().window().fullscreen();
             return driver;
         }
+        public String toString(){
+            return this.name();
+        }
     },
     CHROME {
-        public DesiredCapabilities getDesiredCapabilities() {
+        public DesiredCapabilities getDefaultCapabilities() {
             DesiredCapabilities desiredCapabilities = DesiredCapabilities.chrome();
             desiredCapabilities.setCapability("chrome.switches", Arrays.asList("--no-defauls-browser-check"));
             HashMap<String, String> chromePreferences = new HashMap<String, String>();
@@ -55,7 +60,7 @@ public enum DriverType implements DriverSetup {
         }
     },
     IE {
-        public DesiredCapabilities getDesiredCapabilities() {
+        public DesiredCapabilities getDefaultCapabilities() {
             DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
             capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
             capabilities.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
@@ -69,7 +74,7 @@ public enum DriverType implements DriverSetup {
         }
     },
     SAFARI {
-        public DesiredCapabilities getDesiredCapabilities() {
+        public DesiredCapabilities getDefaultCapabilities() {
             DesiredCapabilities capabilities = DesiredCapabilities.safari();
             capabilities.setCapability("safari.cleanSession", true);
             return capabilities;
@@ -82,7 +87,7 @@ public enum DriverType implements DriverSetup {
 
     },
     EDGE {
-            public DesiredCapabilities getDesiredCapabilities() {
+            public DesiredCapabilities getDefaultCapabilities() {
                 DesiredCapabilities capabilities = DesiredCapabilities.edge();
                 return capabilities;
             }
@@ -91,7 +96,6 @@ public enum DriverType implements DriverSetup {
             EdgeOptions options = new EdgeOptions();
             return new EdgeDriver(options.merge(desiredCapabilities));
         }
-    }
-
+    };
 
 }

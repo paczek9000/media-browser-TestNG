@@ -1,6 +1,6 @@
 package main.pageObjects;
 
-import main.config.DriverFactory;
+import main.config.driver.DriverFactory;
 import lombok.Data;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,7 +28,7 @@ public class DetailsPage extends PageFactory{
     private List<WebElement> tags;
 
     public DetailsPage(){
-        PageFactory.initElements(DriverFactory.getDriver(), this);
+        PageFactory.initElements(DriverFactory.getInstance().getDriver(), this);
     }
 
 

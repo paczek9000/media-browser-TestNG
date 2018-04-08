@@ -10,13 +10,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 
 public class Helper {
-    public static void waitFor(WebDriver driver, WebElement element, int seconds) {
+ public static void waitFor(WebDriver driver, WebElement element, int seconds) {
         WebDriverWait wait = new WebDriverWait(driver, seconds);
-        wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(element)));
+        //wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(By.xpath("test"))))
+
+
+
+
         }
     public static void waitFor(WebDriver driver, By by, int seconds){
         WebDriverWait wait = new WebDriverWait(driver, seconds);
-        wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfAllElementsLocatedBy(by)));
+       // wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfAllElementsLocatedBy(by)));
     }
     public static String getFilePath(String fileName){
         String filePath = "";

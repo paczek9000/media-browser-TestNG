@@ -1,6 +1,6 @@
 package cmsLibraryManager.AssetTagging;
 
-import main.config.DriverFactory;
+import main.config.driver.DriverFactory;
 import main.pageObjects.DirectoryPage;
 import main.utils.AssetPOI;
 import main.utils.JSONDataProvider;
@@ -8,8 +8,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import testConfig.TestSetup;
 
 import java.io.FileReader;
 import java.lang.reflect.Method;
@@ -19,7 +21,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
-public class AssetTaggingTestWD extends DriverFactory {
+public class AssetTaggingTestWD extends TestSetup {
     public static String dataFile = "";
     public static String testCaseName = "AssetTagging.json";
     DirectoryPage mediaBrowserHomePage;
@@ -58,7 +60,7 @@ public class AssetTaggingTestWD extends DriverFactory {
         testingDataToBeCleaned.addAll(Arrays.asList(testingTags));
         testingDataToBeCleaned.addAll(Arrays.asList(testingFilesToUpload));
 
-        mediaBrowserHomePage.goTo(DriverFactory.getDriver(), "https://media-browser.dev-allsaints.com");
+        mediaBrowserHomePage.goTo(DriverFactory.getInstance().getDriver(), "https://media-browser.dev-allsaints.com");
         // commented if started from maven
         // mediaBrowserHomePage.goTo(DriverFactory.getDriver(), DriverFactory.getEnvironmentUrl());
         mediaBrowserHomePage.changeBetweenViews();
@@ -85,7 +87,7 @@ public class AssetTaggingTestWD extends DriverFactory {
 
         testingDataToBeCleaned.add(testingTagWithNotAllowedNumberOfCharacters);
         testingDataToBeCleaned.add(testingFilesToUpload);
-        mediaBrowserHomePage.goTo(DriverFactory.getDriver(), "https://media-browser.dev-allsaints.com");
+        mediaBrowserHomePage.goTo(DriverFactory.getInstance().getDriver(), "https://media-browser.dev-allsaints.com");
         // commented if started from maven
         // mediaBrowserHomePage.goTo(DriverFactory.getDriver(), DriverFactory.getEnvironmentUrl());
         mediaBrowserHomePage.changeBetweenViews();
@@ -125,6 +127,11 @@ public class AssetTaggingTestWD extends DriverFactory {
             description = "the user should be able to add a tag and delete it on the UI for Uploads" +
                     "so the asset is not going to have this tag")
     public void taggingAndDeletingATagOnTheUploadUI() throws Exception {
+
+
+        DriverFactory.getInstance().setDriver("FIREFOX", "local", "Windows");
+        WebDriver driver = DriverFactory.getInstance().getDriver();
+        driver.get("www.google.pl");
 
     }
 
